@@ -1,3 +1,6 @@
+#5.0.1
+Issue 10, remove uri check for support TLS.
+
 #5.0.0
 Issue 9(NNBD)
 

@@ -40,6 +40,10 @@ class Ethereum {
   /// HTTP scheme
   static const String rpcHttpScheme = 'http';
 
+  /// Constants
+  /// HTTPS scheme
+  static const String rpcHttpsScheme = 'https';
+
   /// Web socket scheme
   static const String rpcWsScheme = 'ws';
 
@@ -104,7 +108,7 @@ class Ethereum {
     if (hostname == null) {
       throw ArgumentError.notNull('Ethereum::connectParameters - hostname');
     }
-    if ((scheme != rpcHttpScheme) && (scheme != rpcWsScheme)) {
+    if ((scheme != rpcHttpScheme) && (scheme != rpcWsScheme) && (scheme != rpcHttpsScheme)) {
       throw FormatException(
           'Ethereum::connectParameters - invalid scheme $scheme');
     }
@@ -117,21 +121,8 @@ class Ethereum {
   }
 
   void _validateUri(Uri puri) {
-    // Must have a valid scheme which must be http, host and port
-    if (puri.hasAuthority && (puri.host.isNotEmpty)) {
-      host = puri.host;
-    } else {
-      throw ArgumentError.value(
-          puri.host, 'Ethereum::_validateUri - invalid host');
-    }
+    /// remove validate uri
     var newUri = puri;
-    if (!puri.hasPort) {
-      if (puri.scheme == rpcHttpScheme) {
-        newUri = puri.replace(port: defaultHttpPort);
-      } else {
-        newUri = puri.replace(port: defaultWsPort);
-      }
-    }
     port = newUri.port;
     _uri = newUri;
     rpcClient.uri = _uri;
